@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Travel Planner AI - Outcome</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- 添加 Font Awesome 图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Include confetti library from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <h1>Your Trip Plan</h1>
+  </header>
+
+  <main class="app-main outcome-page animate-fadeIn">
+    <section class="trip-summary">
+      <h2 id="trip-title"></h2>
+      <p id="trip-dates"></p>
+      <p id="trip-interests"></p>
+    </section>
+
+    <div class="tabs">
+      <button class="tab-link active" data-tab="itinerary">
+        <i class="fas fa-calendar-alt"></i> Itinerary
+      </button>
+      <button class="tab-link" data-tab="map">
+        <i class="fas fa-map-marked-alt"></i> Map
+      </button>
+      <button class="tab-link" data-tab="weather">
+        <i class="fas fa-cloud-sun"></i> Weather
+      </button>
+      <button class="tab-link" data-tab="share">
+        <i class="fas fa-share-alt"></i> Share
+      </button>
+      <button class="tab-link" data-tab="export">
+        <i class="fas fa-download"></i> Export
+      </button>
+    </div>
+
+    <section class="tab-content" id="itinerary">
+      <h3>Itinerary Preview</h3>
+      <ul id="itinerary-list">
+        <!-- Dynamically generated or sample itinerary -->
+        <li><strong>Day 1</strong>: Arrival, hotel check-in, explore downtown</li>
+        <li><strong>Day 2</strong>: Visit museums and sample local cuisine</li>
+      </ul>
+    </section>
+
+    <section class="tab-content hidden" id="map">
+      <h3>Map</h3>
+      <p>Embed or display a map here.</p>
+    </section>
+
+    <section class="tab-content hidden" id="weather">
+      <h3>Weather Forecast</h3>
+      <p>Display weather API results here.</p>
+    </section>
+
+    <section class="tab-content hidden" id="share">
+      <h3>Share</h3>
+      <p>Social sharing options or links go here.</p>
+    </section>
+
+    <section class="tab-content hidden" id="export">
+      <h3>Export</h3>
+      <p>Options to download or print your itinerary.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
