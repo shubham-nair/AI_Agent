@@ -1,0 +1,4 @@
+[build]
+  base = "travel-planner"
+  publish = "travel-planner/build"
+  command = "npm run build"
