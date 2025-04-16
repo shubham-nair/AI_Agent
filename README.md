@@ -1,6 +1,6 @@
 # AI Agent Projects
 
-A collection of AI-powered applications.
+AI-powered applications.
 
 ## Travel Planner
 
