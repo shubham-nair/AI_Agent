@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
-    <div>
+    <div className="home-container">
       <h1>Welcome to Travel Planner</h1>
-      <nav>
-        <Link to="/form">Create Travel Plan</Link> |{' '}
-        <Link to="/recommendations">Browse Recommendations</Link>
-      </nav>
+      <p className="subtitle">Plan your perfect trip with AI-powered recommendations</p>
+      <Link to="/form" className="cta-button">
+        Start Planning Your Trip →
+      </Link>
     </div>
   );
 }
