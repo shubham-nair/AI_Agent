@@ -83,6 +83,8 @@
   background: var(--background-color);
   border-radius: 12px;
   box-shadow: 0 4px 6px var(--shadow-color);
+  width: 90%;
+  box-sizing: border-box;
 }
 
 .form-header {
@@ -91,20 +93,21 @@
 }
 
 .form-header h1 {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
   color: var(--text-color);
   margin-bottom: 0.5rem;
 }
 
 .form-header p {
   color: var(--text-light);
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
 }
 
 .travel-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  width: 100%;
 }
 
 .form-group {
@@ -112,6 +115,7 @@
   flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1.25rem;
+  width: 100%;
 }
 
 .form-group label {
@@ -127,6 +131,7 @@
   font-size: 1rem;
   transition: all 0.2s ease;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .form-group input:focus {
@@ -139,6 +144,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  width: 100%;
 }
 
 .interests-header {
@@ -413,4 +419,30 @@
 
 .auth-form .auth-link a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .date-group {
+    grid-template-columns: 1fr;
+  }
+
+  .interests-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 1rem;
+    margin: 0.5rem auto;
+  }
+
+  .interests-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
 } 
