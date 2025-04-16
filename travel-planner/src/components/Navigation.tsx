@@ -8,15 +8,17 @@ const Navigation: React.FC = () => {
   return (
     <nav className="navigation">
       <div className="nav-brand">
-        {!isHomePage && (
-          <Link to="/" className="nav-link">
-            ← Back to Home
-          </Link>
-        )}
+        <Link to="/" className="nav-link">
+          {isHomePage ? 'Travel Planner' : '← Back to Home'}
+        </Link>
       </div>
       <div className="nav-links">
         <Link to="/recommendations" className="nav-link">Recommendations</Link>
         <Link to="/profile" className="nav-link">My Plans</Link>
+      </div>
+      <div className="auth-links">
+        <Link to="/login" className="nav-link">Sign In</Link>
+        <Link to="/register" className="nav-button">Sign Up</Link>
       </div>
     </nav>
   );
