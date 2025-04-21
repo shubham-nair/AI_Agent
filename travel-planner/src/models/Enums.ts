@@ -9,6 +9,9 @@ export enum PlanSource {
     Culture = 'culture',
     Food = 'food',
     Adventure = 'adventure',
-    Relaxation = 'relaxation'
+    Relaxation = 'relaxation',
+    Shopping = 'shopping',
+    History = 'history',
+    Nightlife = 'nightlife'
   }
   

@@ -1,5 +1,22 @@
 {
+  "name": "travel-planner-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "netlify dev",
+    "build": "netlify build"
+  },
   "dependencies": {
-    "react-router-dom": "^7.5.0"
+    "@genkit-ai/googleai": "^1.6.2",
+    "@netlify/functions": "^2.0.0",
+    "genkit": "^1.6.2",
+    "travel-planner-root": "file:",
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@types/node": "^16.18.0",
+    "netlify-cli": "^16.0.0",
+    "ts-node": "^10.9.0",
+    "vm-browserify": "^1.1.2"
   }
 }
