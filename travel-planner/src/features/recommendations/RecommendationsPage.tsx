@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/RecommendationsPage.css';
 
@@ -14,6 +14,9 @@ interface Destination {
 
 const RecommendationsPage: React.FC = () => {
   const navigate = useNavigate();
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const [destinations] = useState<Destination[]>([
     {
       id: '1',
@@ -56,8 +59,50 @@ const RecommendationsPage: React.FC = () => {
     }
   ]);
 
+  useEffect(() => {
+    // Scroll to show the create plan card partially on load
+    if (gridRef.current) {
+      const scrollWidth = gridRef.current.scrollWidth;
+      const clientWidth = gridRef.current.clientWidth;
+      const createCardWidth = 350; // Width of the create plan card
+      const scrollPosition = scrollWidth - clientWidth - createCardWidth + 100; // Show 100px of the card
+      
+      gridRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      });
+    }
+  }, []);
+
   const handleDestinationClick = (id: string) => {
     navigate(`/recommendations/${id}`);
+  };
+
+  const handleCreatePlanClick = () => {
+    navigate('/form');
+  };
+
+  const handleScroll = () => {
+    if (gridRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = gridRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
+    }
+  };
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (gridRef.current) {
+      const scrollAmount = 400; // Adjust this value to control scroll distance
+      const currentScroll = gridRef.current.scrollLeft;
+      const newScroll = direction === 'left' 
+        ? currentScroll - scrollAmount 
+        : currentScroll + scrollAmount;
+      
+      gridRef.current.scrollTo({
+        left: newScroll,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
@@ -68,7 +113,7 @@ const RecommendationsPage: React.FC = () => {
           <p>Explore amazing destinations around the world and find your perfect trip</p>
         </div>
         
-        <div className="recommendations-grid">
+        <div className="recommendations-grid" ref={gridRef} onScroll={handleScroll}>
           {destinations.map((destination) => (
             <div
               key={destination.id}
@@ -104,7 +149,48 @@ const RecommendationsPage: React.FC = () => {
               </div>
             </div>
           ))}
+          
+          <div
+            className="destination-card create-plan-card"
+            onClick={handleCreatePlanClick}
+          >
+            <div className="create-plan-content">
+              <div className="create-plan-icon">
+                <i className="fas fa-plus"></i>
+              </div>
+              <h2 className="destination-title">Create Your Own Plan</h2>
+              <p className="destination-description">
+                Design a personalized travel itinerary tailored to your preferences and interests.
+              </p>
+              <div className="destination-tags">
+                <span className="tag" data-type="custom">
+                  Custom
+                </span>
+                <span className="tag" data-type="personalized">
+                  Personalized
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <button 
+          className="navigation-button prev"
+          onClick={() => scroll('left')}
+          disabled={!canScrollLeft}
+          aria-label="Scroll left"
+        >
+          <i className="fas fa-chevron-circle-left"></i>
+        </button>
+
+        <button 
+          className="navigation-button next"
+          onClick={() => scroll('right')}
+          disabled={!canScrollRight}
+          aria-label="Scroll right"
+        >
+          <i className="fas fa-chevron-circle-right"></i>
+        </button>
       </div>
     </div>
   );

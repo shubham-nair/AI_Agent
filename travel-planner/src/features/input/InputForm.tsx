@@ -35,12 +35,43 @@ const InputForm: React.FC = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showLongTripDialog, setShowLongTripDialog] = useState(false);
+
+  const validateDates = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const startDate = new Date(formData.startDate);
+    const endDate = new Date(formData.endDate);
+    
+    if (startDate < today) {
+      setError('Start date cannot be in the past');
+      return false;
+    }
+    
+    if (endDate < startDate) {
+      setError('End date cannot be before start date');
+      return false;
+    }
+    
+    const dayDiff = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    if (dayDiff > 10) {
+      setShowLongTripDialog(true);
+      return false;
+    }
+    
+    return true;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError('');
-
+    
+    if (!validateDates()) {
+      return;
+    }
+    
+    setIsLoading(true);
     try {
       const travelPlan = await generateTravelPlan(formData);
       localStorage.setItem('currentTravelPlan', JSON.stringify(travelPlan));
@@ -60,6 +91,23 @@ const InputForm: React.FC = () => {
         ? prev.interests.filter(i => i !== interest)
         : [...prev.interests, interest]
     }));
+  };
+
+  const handleConfirmLongTrip = () => {
+    setShowLongTripDialog(false);
+    setIsLoading(true);
+    generateTravelPlan(formData)
+      .then(travelPlan => {
+        localStorage.setItem('currentTravelPlan', JSON.stringify(travelPlan));
+        navigate('/outcome');
+      })
+      .catch(err => {
+        setError('Failed to generate travel plan. Please try again.');
+        console.error('Error:', err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -92,6 +140,7 @@ const InputForm: React.FC = () => {
                 id="startDate"
                 value={formData.startDate}
                 onChange={(e) => setFormData({...formData, startDate: e.target.value})}
+                min={new Date().toISOString().split('T')[0]}
                 required
               />
             </div>
@@ -103,6 +152,7 @@ const InputForm: React.FC = () => {
                 id="endDate"
                 value={formData.endDate}
                 onChange={(e) => setFormData({...formData, endDate: e.target.value})}
+                min={formData.startDate || new Date().toISOString().split('T')[0]}
                 required
               />
             </div>
@@ -140,6 +190,34 @@ const InputForm: React.FC = () => {
           </button>
         </form>
       </div>
+
+      {showLongTripDialog && (
+        <div className="dialog-overlay">
+          <div className="dialog-content">
+            <h3>Long Trip Warning</h3>
+            <p>Your trip duration is more than 10 days. We recommend either:</p>
+            <ul>
+              <li>Reducing the trip duration to make it more manageable</li>
+              <li>Creating multiple shorter trips instead</li>
+            </ul>
+            <p>Would you like to continue with this long trip?</p>
+            <div className="dialog-buttons">
+              <button 
+                className="secondary-button"
+                onClick={() => setShowLongTripDialog(false)}
+              >
+                Adjust Dates
+              </button>
+              <button 
+                className="primary-button"
+                onClick={handleConfirmLongTrip}
+              >
+                Continue Anyway
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
