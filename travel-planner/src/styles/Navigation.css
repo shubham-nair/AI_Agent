@@ -1,0 +1,48 @@
+.navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--background-color);
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+
+.nav-brand, .nav-links, .auth-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links { justify-content: center; }
+.auth-links { justify-content: flex-end; }
+
+.nav-link, .nav-button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link {
+  color: var(--text-color);
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+}
+
+.nav-button {
+  background: var(--primary-color);
+  color: var(--background-color);
+}
+
+.nav-button:hover {
+  background: var(--primary-hover);
+} 
