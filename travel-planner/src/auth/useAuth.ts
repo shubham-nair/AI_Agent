@@ -1,14 +1,33 @@
 import { useEffect, useState } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged, User, signOut } from 'firebase/auth';
 import { auth } from '../firebase/config';
 
-export function useAuth() {
-  const [user, setUser] = useState<User | null>(null);
+interface AuthContext {
+  user: User | null;
+  logout: () => Promise<void>;
+}
+
+export function useAuth(): AuthContext {
+  const [user, setUser] = useState<User | null>(() => {
+    // Initialize with the current user if available
+    return auth.currentUser;
+  });
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, setUser);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
     return () => unsubscribe();
   }, []);
 
-  return user;
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  return { user, logout };
 }

@@ -4,6 +4,8 @@ import { useAuth } from '../../auth/useAuth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faStar as faRegStar, faBookmark, faBookmark as faRegBookmark } from '@fortawesome/free-regular-svg-icons';
 import { faStar as faSolidStar, faBookmark as faSolidBookmark, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { TravelPlan } from '../../models/TravelPlan';
+import { PlanSource, Interest } from '../../models/Enums';
 import '../../styles/RecommendationsPage.css';
 
 interface Destination {
@@ -81,9 +83,14 @@ const RecommendationDetail: React.FC = () => {
           }
         };
         setDestination(mockData);
-        setIsLoading(false);
+        
+        // Check if this plan is already saved
+        const savedPlans = JSON.parse(localStorage.getItem('savedPlans') || '[]');
+        const isPlanSaved = savedPlans.some((plan: TravelPlan) => plan.id === id);
+        setIsSaved(isPlanSaved);
       } catch (error) {
         console.error('Error fetching destination:', error);
+      } finally {
         setIsLoading(false);
       }
     };
@@ -96,8 +103,43 @@ const RecommendationDetail: React.FC = () => {
       navigate('/login');
       return;
     }
+
+    if (!destination) return;
+
+    const travelPlan: TravelPlan = {
+      id: destination.id,
+      title: destination.title,
+      preference: {
+        destination: 'Paris', // This should be extracted from the destination
+        startDate: new Date().toISOString().split('T')[0],
+        endDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        interests: [Interest.Culture, Interest.Food] // This should be extracted from the destination
+      },
+      plan: destination.details.itinerary.map(day => ({
+        date: new Date(Date.now() + (day.day - 1) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        activities: day.activities.map(activity => ({
+          title: activity,
+          time: '',
+          location: '',
+          notes: ''
+        })),
+        notes: ''
+      })),
+      createdAt: new Date().toISOString(),
+      isEditable: true,
+      source: PlanSource.Recommendation
+    };
+
+    // Save to localStorage for now
+    const savedPlans = JSON.parse(localStorage.getItem('savedPlans') || '[]');
+    if (isSaved) {
+      const updatedPlans = savedPlans.filter((plan: TravelPlan) => plan.id !== travelPlan.id);
+      localStorage.setItem('savedPlans', JSON.stringify(updatedPlans));
+    } else {
+      localStorage.setItem('savedPlans', JSON.stringify([...savedPlans, travelPlan]));
+    }
+
     setIsSaved(!isSaved);
-    // TODO: Implement API call for saving/unsaving
   };
 
   if (isLoading) {
@@ -120,6 +162,7 @@ const RecommendationDetail: React.FC = () => {
               <FontAwesomeIcon icon={faArrowLeft} />
               Back to Recommendations
             </button>
+
             <h1>{destination.title}</h1>
             <div className="destination-meta">
               <div className="destination-rating">
@@ -152,13 +195,7 @@ const RecommendationDetail: React.FC = () => {
           </div>
 
           <div className="destination-content">
-            <div className="destination-tags">
-              {destination.tags.map((tag, index) => (
-                <span key={index} className="tag">{tag}</span>
-              ))}
-            </div>
-
-            <div className="destination-overview">
+            <div className="destination-description">
               <h2>Overview</h2>
               <p>{destination.details.overview}</p>
             </div>
@@ -174,12 +211,12 @@ const RecommendationDetail: React.FC = () => {
 
             <div className="destination-itinerary">
               <h2>Itinerary</h2>
-              {destination.details.itinerary.map((day) => (
-                <div key={day.day} className="day-schedule">
+              {destination.details.itinerary.map((day, index) => (
+                <div key={index} className="day-plan">
                   <h3>Day {day.day}</h3>
                   <ul>
-                    {day.activities.map((activity, index) => (
-                      <li key={index}>{activity}</li>
+                    {day.activities.map((activity, actIndex) => (
+                      <li key={actIndex}>{activity}</li>
                     ))}
                   </ul>
                 </div>
