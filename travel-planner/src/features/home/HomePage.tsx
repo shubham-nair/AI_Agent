@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import ImageCarousel from '../../components/ImageCarousel';
 import '../../styles/HomePage.css';
@@ -11,17 +11,7 @@ function HomePage() {
   const fullText = "Plan your perfect trip with AI-powered recommendations";
   const period = 3000;
 
-  useEffect(() => {
-    let ticker = setInterval(() => {
-      tick();
-    }, typingSpeed);
-
-    return () => {
-      clearInterval(ticker);
-    };
-  }, [text, isDeleting, typingSpeed]);
-
-  const tick = () => {
+  const tick = useCallback(() => {
     if (isDeleting) {
       setText('');
       setIsDeleting(false);
@@ -36,7 +26,17 @@ function HomePage() {
       setIsDeleting(true);
       setTypingSpeed(period);
     }
-  };
+  }, [isDeleting, text, fullText, period, loopNum]);
+
+  useEffect(() => {
+    let ticker = setInterval(() => {
+      tick();
+    }, typingSpeed);
+
+    return () => {
+      clearInterval(ticker);
+    };
+  }, [text, isDeleting, typingSpeed, tick]);
 
   return (
     <div className="home-page">
