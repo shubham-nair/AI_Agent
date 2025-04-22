@@ -1,0 +1,367 @@
+.recommendations-page {
+  min-height: 100vh;
+  padding: 4rem 0;
+  position: relative;
+  background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=3273&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.recommendations-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.recommendations-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.recommendations-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: white;
+}
+
+.recommendations-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.recommendations-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.destination-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  max-width: 350px;
+  width: 100%;
+}
+
+.destination-card:hover {
+  transform: translateY(-5px);
+}
+
+.destination-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.destination-content {
+  padding: 1.5rem;
+}
+
+.destination-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.destination-description {
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.destination-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #2c3e50;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tag::before {
+  content: '#';
+  color: #3498db;
+  font-weight: bold;
+}
+
+/* Different tag colors based on content */
+.tag[data-type="romantic"]::before {
+  color: #e74c3c;
+}
+
+.tag[data-type="art"]::before {
+  color: #9b59b6;
+}
+
+.tag[data-type="cuisine"]::before {
+  color: #e67e22;
+}
+
+.tag[data-type="urban"]::before {
+  color: #34495e;
+}
+
+.tag[data-type="culture"]::before {
+  color: #1abc9c;
+}
+
+.tag[data-type="shopping"]::before {
+  color: #f1c40f;
+}
+
+.tag[data-type="island"]::before {
+  color: #3498db;
+}
+
+.tag[data-type="resort"]::before {
+  color: #2ecc71;
+}
+
+.tag[data-type="diving"]::before {
+  color: #16a085;
+}
+
+.destination-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #666;
+}
+
+.destination-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.destination-rating i {
+  color: #ffd700;
+}
+
+.destination-duration {
+  font-size: 0.9rem;
+}
+
+/* Detail Page Styles */
+.destination-detail {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.destination-header {
+  padding: 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.destination-header h1 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.destination-image-container {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.destination-image-container .destination-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.destination-content {
+  padding: 2rem;
+}
+
+.destination-overview,
+.destination-highlights,
+.destination-itinerary,
+.destination-tips {
+  margin-bottom: 2rem;
+}
+
+.destination-overview h2,
+.destination-highlights h2,
+.destination-itinerary h2,
+.destination-tips h2 {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.destination-overview p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.destination-highlights ul,
+.destination-itinerary ul,
+.destination-tips ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.destination-highlights li,
+.destination-itinerary li,
+.destination-tips li {
+  padding: 0.5rem 0;
+  color: var(--text-color);
+  font-size: 1.1rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.destination-highlights li::before,
+.destination-itinerary li::before,
+.destination-tips li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+}
+
+.day-schedule {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.day-schedule h3 {
+  font-size: 1.4rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.save-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--primary-light);
+  color: var(--primary-color);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.save-button:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.save-button.saved {
+  background: var(--primary-color);
+  color: white;
+}
+
+.star-icon {
+  color: #fbbf24;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background: white;
+}
+
+.back-button svg {
+  font-size: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .recommendations-header h1 {
+    font-size: 2rem;
+  }
+  
+  .recommendations-header p {
+    font-size: 1rem;
+  }
+  
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .recommendations-page {
+    padding: 6rem 1rem 2rem;
+  }
+
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .destination-image {
+    height: 160px;
+  }
+
+  .destination-image-container {
+    height: 250px;
+  }
+
+  .destination-header h1 {
+    font-size: 1.8rem;
+  }
+} 
