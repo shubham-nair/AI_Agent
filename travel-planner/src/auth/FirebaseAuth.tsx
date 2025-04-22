@@ -2,7 +2,8 @@ import {
   GoogleAuthProvider, 
   signInWithPopup, 
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  updateProfile
 } from 'firebase/auth';
 import { auth } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
@@ -23,14 +24,17 @@ export default function FirebaseAuth() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState('');
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      if (result.user) {
       navigate('/');
+      }
     } catch (error) {
       console.error('Google login failed:', error);
       setError('Google login failed. Please try again.');
@@ -42,10 +46,14 @@ export default function FirebaseAuth() {
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
+        navigate('/');
       } else {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const result = await createUserWithEmailAndPassword(auth, email, password);
+        if (result.user && displayName) {
+          await updateProfile(result.user, { displayName });
       }
       navigate('/');
+      }
     } catch (error) {
       console.error('Email authentication failed:', error);
       setError('Authentication failed. Please check your credentials.');
@@ -60,6 +68,17 @@ export default function FirebaseAuth() {
         {error && <div className="error-message">{error}</div>}
         
         <form onSubmit={handleEmailAuth} className="auth-form">
+          {!isLogin && (
+            <div className="form-group">
+              <input
+                type="text"
+                placeholder="Display Name"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                required={!isLogin}
+              />
+            </div>
+          )}
           <div className="form-group">
             <input
               type="email"
@@ -99,6 +118,7 @@ export default function FirebaseAuth() {
             {isLogin ? "Don't have an account?" : "Already have an account?"}
           </span>
           <button 
+            type="button" 
             onClick={() => setIsLogin(!isLogin)}
             className="switch-button"
           >

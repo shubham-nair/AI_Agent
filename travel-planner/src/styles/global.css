@@ -97,7 +97,7 @@
 /* Form */
 .form-container {
   max-width: 800px;
-  margin: 2rem auto;
+  margin: 4rem auto 2rem;
   padding: 2rem;
   background: var(--background-color);
   border-radius: 12px;

@@ -1,0 +1,169 @@
+.outcome-page {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('https://plus.unsplash.com/premium_photo-1723936846310-38f4c1cf044e?q=80&w=2672&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  padding: 10rem 2rem 4rem;
+}
+
+.outcome-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.outcome-page .outcome-container {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 2rem;
+}
+
+.outcome-page .outcome-header h1,
+.outcome-page .outcome-header p,
+.outcome-page .day-card,
+.outcome-page .activity-card,
+.outcome-page .day-notes {
+  color: var(--text-color);
+}
+
+.outcome-page .day-card {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.outcome-page .activity-card {
+  background-color: rgba(248, 250, 252, 0.9);
+}
+
+.outcome-page .day-notes {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.outcome-page .action-buttons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.outcome-page .primary-button,
+.outcome-page .secondary-button {
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.outcome-page .primary-button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.outcome-page .primary-button:hover {
+  background: var(--primary-hover);
+}
+
+.outcome-page .secondary-button {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.outcome-page .secondary-button:hover {
+  background: var(--primary-light);
+}
+
+/* My Plans specific styles */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.plan-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.plan-card:hover {
+  transform: translateY(-4px);
+}
+
+.plan-card h3 {
+  margin: 0 0 1rem;
+  color: var(--text-color);
+}
+
+.plan-card p {
+  margin: 0.5rem 0;
+  color: var(--text-light);
+}
+
+.plan-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+}
+
+.empty-state p {
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-light);
+}
+
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: var(--error-color);
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.retry-button {
+  margin-top: 1rem;
+  padding: 0.8rem 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.retry-button:hover {
+  background: var(--primary-hover);
+} 

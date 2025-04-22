@@ -45,4 +45,16 @@
 
 .nav-button:hover {
   background: var(--primary-hover);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.username {
+  color: var(--text-color);
+  font-weight: 500;
+  margin-right: 0.5rem;
 } 
