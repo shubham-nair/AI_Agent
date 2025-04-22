@@ -54,10 +54,11 @@
 }
 
 .outcome-page .action-buttons {
-  margin-top: 2rem;
   display: flex;
   gap: 1rem;
   justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
 .outcome-page .primary-button,
@@ -68,6 +69,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  min-width: 150px;
 }
 
 .outcome-page .primary-button {
@@ -78,6 +80,11 @@
 
 .outcome-page .primary-button:hover {
   background: var(--primary-hover);
+}
+
+.outcome-page .primary-button:disabled {
+  background: var(--text-light);
+  cursor: not-allowed;
 }
 
 .outcome-page .secondary-button {
