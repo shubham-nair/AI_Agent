@@ -445,4 +445,212 @@
   .interests-grid {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
+}
+
+/* Outcome Page Styles */
+.outcome-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.outcome-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.outcome-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.dates {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.itinerary-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.day-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.day-header h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0;
+}
+
+.day-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.date {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.weather {
+  background: #f0f9ff;
+  color: #0369a1;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.activities {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.activity-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.activity-time {
+  min-width: 80px;
+  font-weight: 600;
+  color: #0369a1;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.description {
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+.location {
+  color: #0369a1;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.day-notes {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.day-notes h4 {
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.day-notes p {
+  color: #666;
+  font-style: italic;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.primary-button,
+.secondary-button {
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.primary-button {
+  background: #0369a1;
+  color: white;
+  border: none;
+}
+
+.primary-button:hover {
+  background: #075985;
+}
+
+.secondary-button {
+  background: white;
+  color: #0369a1;
+  border: 1px solid #0369a1;
+}
+
+.secondary-button:hover {
+  background: #f0f9ff;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: #dc2626;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.retry-button {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.retry-button:hover {
+  background: #b91c1c;
+}
+
+@media print {
+  .action-buttons {
+    display: none;
+  }
+  
+  .day-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
 } 

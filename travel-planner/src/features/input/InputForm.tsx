@@ -1,48 +1,58 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IconType } from 'react-icons';
+import { IconType } from 'react-icons'; 
 import { FaLandmark, FaMountain, FaUtensils, FaHiking, FaUmbrellaBeach, FaShoppingBag, FaHistory, FaGlassCheers } from 'react-icons/fa';
-
-interface FormData {
-  destination: string;
-  startDate: string;
-  endDate: string;
-  interests: string[];
-}
+import { generateTravelPlan } from '../../services/ai/travelAIService';
+import { FormInput } from '../../models/FormInput';
+import { Interest } from '../../models/Enums';
+import '../../styles/global.css';
 
 interface InterestOption {
-  id: string;
+  id: Interest;
   icon: IconType;
   label: string;
 }
 
 const interestOptions: InterestOption[] = [
-  { id: 'Culture', icon: FaLandmark, label: 'Culture' },
-  { id: 'Nature', icon: FaMountain, label: 'Nature' },
-  { id: 'Food', icon: FaUtensils, label: 'Food' },
-  { id: 'Adventure', icon: FaHiking, label: 'Adventure' },
-  { id: 'Relaxation', icon: FaUmbrellaBeach, label: 'Relaxation' },
-  { id: 'Shopping', icon: FaShoppingBag, label: 'Shopping' },
-  { id: 'History', icon: FaHistory, label: 'History' },
-  { id: 'Nightlife', icon: FaGlassCheers, label: 'Nightlife' },
+  { id: Interest.Culture, icon: FaLandmark, label: 'Culture' },
+  { id: Interest.Nature, icon: FaMountain, label: 'Nature' },
+  { id: Interest.Food, icon: FaUtensils, label: 'Food' },
+  { id: Interest.Adventure, icon: FaHiking, label: 'Adventure' },
+  { id: Interest.Relaxation, icon: FaUmbrellaBeach, label: 'Relaxation' },
+  { id: Interest.Shopping, icon: FaShoppingBag, label: 'Shopping' },
+  { id: Interest.History, icon: FaHistory, label: 'History' },
+  { id: Interest.Nightlife, icon: FaGlassCheers, label: 'Nightlife' },
 ];
 
 const InputForm: React.FC = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormInput>({
     destination: '',
     startDate: '',
     endDate: '',
     interests: []
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Handle form submission
-    navigate('/outcome');
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const travelPlan = await generateTravelPlan(formData);
+      localStorage.setItem('currentTravelPlan', JSON.stringify(travelPlan));
+      navigate('/outcome');
+    } catch (err) {
+      setError('Failed to generate travel plan. Please try again.');
+      console.error('Error:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleInterestChange = (interest: string) => {
+  const handleInterestChange = (interest: Interest) => {
     setFormData(prev => ({
       ...prev,
       interests: prev.interests.includes(interest)
@@ -58,6 +68,7 @@ const InputForm: React.FC = () => {
         <p>Tell us about your travel preferences and we'll create a personalized itinerary</p>
       </div>
       
+      {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit} className="travel-form">
         <div className="form-group">
           <label htmlFor="destination">Destination</label>
@@ -118,8 +129,12 @@ const InputForm: React.FC = () => {
           </div>
         </div>
 
-        <button type="submit" className="submit-button">
-          Generate Itinerary
+        <button 
+          type="submit" 
+          className="submit-button"
+          disabled={isLoading}
+        >
+          {isLoading ? 'Generating Itinerary...' : 'Generate Itinerary'}
         </button>
       </form>
     </div>

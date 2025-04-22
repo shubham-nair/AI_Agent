@@ -1,4 +1,8 @@
 [build]
-  base = "travel-planner"
-  publish = "build"
-  command = "npm run build"
+  command   = "cd travel-planner && npm install && npm run build"
+  publish   = "travel-planner/build"
+  functions = "netlify/functions"
+
+[dev]
+  command   = "cd travel-planner && npm start"
+  functions = "netlify/functions"
