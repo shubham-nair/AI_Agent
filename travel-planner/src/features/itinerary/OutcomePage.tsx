@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { TravelPlan } from '../../models/TravelPlan';
 import { DailyItinerary } from '../../models/DailyItinerary';
 import { Activity } from '../../models/Activity';
+import { PlanSource } from '../../models/Enums';
 import '../../styles/global.css';
 import '../../styles/OutcomePage.css';
 
@@ -10,6 +11,7 @@ function OutcomePage() {
   const navigate = useNavigate();
   const [travelPlan, setTravelPlan] = useState<TravelPlan | null>(null);
   const [error, setError] = useState<string>('');
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const storedPlan = localStorage.getItem('currentTravelPlan');
@@ -34,6 +36,38 @@ function OutcomePage() {
       month: 'long',
       day: 'numeric'
     });
+  };
+
+  const handleSavePlan = () => {
+    if (!travelPlan) return;
+
+    setIsSaving(true);
+    try {
+      // Get existing saved plans
+      const savedPlansData = localStorage.getItem('savedPlans');
+      const savedPlans: TravelPlan[] = savedPlansData ? JSON.parse(savedPlansData) : [];
+
+      // Create a new plan with generated source
+      const planToSave: TravelPlan = {
+        ...travelPlan,
+        id: `plan-${Date.now()}`,
+        source: PlanSource.Generated,
+        createdAt: new Date().toISOString(),
+        isEditable: true
+      };
+
+      // Add the new plan to saved plans
+      savedPlans.push(planToSave);
+      localStorage.setItem('savedPlans', JSON.stringify(savedPlans));
+
+      // Navigate to profile page
+      navigate('/profile');
+    } catch (error) {
+      console.error('Error saving plan:', error);
+      setError('Failed to save plan. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   if (error) {
@@ -108,6 +142,9 @@ function OutcomePage() {
         <div className="action-buttons">
           <button onClick={() => navigate('/form')} className="secondary-button">
             Create New Plan
+          </button>
+          <button onClick={handleSavePlan} className="primary-button" disabled={isSaving}>
+            {isSaving ? 'Saving...' : 'Save to My Plans'}
           </button>
           <button onClick={() => window.print()} className="primary-button">
             Print Itinerary
