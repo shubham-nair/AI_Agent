@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import '../styles/Navigation.css';
 
 const Navigation: React.FC = () => {
   const location = useLocation();
@@ -18,7 +19,6 @@ const Navigation: React.FC = () => {
       </div>  
       <div className="auth-links">
         <Link to="/login" className="nav-link">Sign In</Link>
-
       </div>
     </nav>
   );

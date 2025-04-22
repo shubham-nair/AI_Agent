@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #5b809b;
-  --primary-hover: #4a6a82;
+  --primary-color: #108ee7;
+  --primary-hover: #525e68;
   --primary-light: #e8f0f7;
   --text-color: #1f2937;
   --text-light: #6b7280;
@@ -15,14 +15,33 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
 .main-content {
   flex: 1;
-  padding: 4rem 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 0;
+  max-width: none;
+  margin: 0;
   width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Remove padding for home page */
+.home-page .main-content {
+  padding: 0;
+  max-width: none;
+  margin: 0;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Navigation */
