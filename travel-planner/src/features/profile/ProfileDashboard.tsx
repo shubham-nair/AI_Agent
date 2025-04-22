@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../auth/useAuth';
 import { TravelPlan } from '../../models/TravelPlan';
-import { Interest } from '../../models/Enums';
-import { PlanSource } from '../../models/Enums';
 import '../../styles/global.css';
 import '../../styles/ProfilePage.css';
 

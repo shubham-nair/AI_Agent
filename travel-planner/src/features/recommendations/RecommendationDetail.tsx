@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/useAuth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStar as faRegStar, faBookmark, faBookmark as faRegBookmark } from '@fortawesome/free-regular-svg-icons';
+import { faStar as faRegStar, faBookmark as faRegBookmark } from '@fortawesome/free-regular-svg-icons';
 import { faStar as faSolidStar, faBookmark as faSolidBookmark, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { TravelPlan } from '../../models/TravelPlan';
 import { PlanSource, Interest } from '../../models/Enums';
