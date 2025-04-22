@@ -48,4 +48,83 @@
 .form-page .interest-button:hover,
 .form-page .interest-button.selected {
   background-color: var(--primary-light);
+}
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.dialog-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dialog-content h3 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.dialog-content p {
+  color: var(--text-light);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.dialog-content ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.dialog-content li {
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.dialog-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.dialog-buttons button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dialog-buttons .primary-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.dialog-buttons .primary-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.dialog-buttons .secondary-button {
+  background-color: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.dialog-buttons .secondary-button:hover {
+  background-color: var(--primary-light);
 } 
