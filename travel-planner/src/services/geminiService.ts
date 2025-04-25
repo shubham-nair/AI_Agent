@@ -10,6 +10,8 @@ interface GeminiError {
 
 export const generateContent = async (prompt: string, maxTokens: number = 1000): Promise<string> => {
   try {
+    console.log('Calling Netlify function with prompt:', prompt);
+    
     const response = await fetch('/.netlify/functions/gemini', {
       method: 'POST',
       headers: {
@@ -21,13 +23,21 @@ export const generateContent = async (prompt: string, maxTokens: number = 1000):
       }),
     });
 
+    console.log('Response status:', response.status);
     const data: GeminiResponse | GeminiError = await response.json();
+    console.log('Response data:', data);
 
     if (!response.ok) {
-      throw new Error((data as GeminiError).error || 'Failed to generate content');
+      const errorData = data as GeminiError;
+      throw new Error(errorData.error || errorData.details || 'Failed to generate content');
     }
 
-    return (data as GeminiResponse).result;
+    const successData = data as GeminiResponse;
+    if (!successData.success) {
+      throw new Error('Failed to generate content: No success flag in response');
+    }
+
+    return successData.result;
   } catch (error) {
     console.error('Error generating content:', error);
     throw error;

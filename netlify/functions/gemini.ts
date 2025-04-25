@@ -4,11 +4,30 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 // Initialize the Gemini API client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS'
+};
+
 export const handler: Handler = async (event) => {
+  // Handle CORS preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: ''
+    };
+  }
+
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers: {
+        ...corsHeaders,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ error: 'Method not allowed' }),
     };
   }
@@ -20,6 +39,10 @@ export const handler: Handler = async (event) => {
     if (!prompt) {
       return {
         statusCode: 400,
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ error: 'Prompt is required' }),
       };
     }
@@ -40,7 +63,8 @@ export const handler: Handler = async (event) => {
     return {
       statusCode: 200,
       headers: {
-        'Content-Type': 'application/json',
+        ...corsHeaders,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({ 
         result: text,
@@ -52,7 +76,8 @@ export const handler: Handler = async (event) => {
     return {
       statusCode: 500,
       headers: {
-        'Content-Type': 'application/json',
+        ...corsHeaders,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({ 
         error: 'Failed to generate content',
