@@ -9,6 +9,7 @@ import RecommendationsPage from './features/recommendations/RecommendationsPage'
 import RecommendationDetail from './features/recommendations/RecommendationDetail';
 import LoginPage from './auth/LoginPage';
 import { useAuth } from './auth/useAuth';
+import { GeminiChat } from './components/GeminiChat';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -43,6 +44,7 @@ function AppRoutes() {
       />
       <Route path="/recommendations" element={<RecommendationsPage />} />
       <Route path="/recommendations/:id" element={<RecommendationDetail />} />
+      <Route path="/chat" element={<GeminiChat />} />
     </Routes>
   );
 }
