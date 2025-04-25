@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "netlify dev",
-    "build": "netlify build"
+    "build:frontend": "cd travel-planner && npm install && npm run build",
+    "start": "node server.js"
   },
   "dependencies": {
+    "express": "^4.x",
+    "body-parser": "^1.x",
     "@genkit-ai/googleai": "^1.6.2",
     "@google/generative-ai": "^0.24.0",
     "@netlify/functions": "^2.8.2",
